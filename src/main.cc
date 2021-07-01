@@ -1,10 +1,3 @@
-#include <chrono>
-#include <cstdio>
-#include <cstdlib>
-#include <iostream>
-#include <thread>
-#include <unistd.h>
-
 #include "Board.hh"
 #include "Game.hh"
 #include "Pair.hh"
