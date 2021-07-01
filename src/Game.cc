@@ -187,7 +187,14 @@ void Game::run()
         }
         }
 
-        while ((c = mTerm.readKey()) <= 0) {}
+        while ((c = mTerm.readKey()) <= 0)
+            if (mTerm.isScreenSizeChanges())
+            {
+                mTerm.updateScreenSize();
+                mTerm.refreshScreen();
+                renderBoard();
+            }
+
         if (mTerm.isExit(c)) break;
 
         movePlayer(c);

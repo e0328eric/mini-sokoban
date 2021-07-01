@@ -79,6 +79,29 @@ ScreenSize Terminal::getScreenSize() const
     return mScreenSize;
 }
 
+bool Terminal::isScreenSizeChanges() const
+{
+    size_t row = 0;
+    size_t col = 0;
+
+    if (write(STDOUT, "\x1b[999C\x1b[999B", 12) != 12)
+        die("Terminal::Terminal (write)");
+
+    if (getCursorPosition(&row, &col) == -1)
+        die("Terminal::Terminal (getCursorPosition)");
+
+    return col != mScreenSize.fst || row != mScreenSize.snd;
+}
+
+void Terminal::updateScreenSize()
+{
+    if (write(STDOUT, "\x1b[999C\x1b[999B", 12) != 12)
+        die("Terminal::Terminal (write)");
+
+    if (getCursorPosition(&mScreenSize.snd, &mScreenSize.fst) == -1)
+        die("Terminal::Terminal (getCursorPosition)");
+}
+
 int Terminal::readKey() const
 {
     int nread;

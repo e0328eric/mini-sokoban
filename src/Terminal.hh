@@ -27,6 +27,8 @@ namespace sokoban
         }
 
         ScreenSize getScreenSize() const;
+        bool isScreenSizeChanges() const;
+        void updateScreenSize();
 
         int readKey() const;
 
