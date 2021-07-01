@@ -5,7 +5,6 @@
 #include "SatSize.hh"
 #include "Terminal.hh"
 
-// Map string must start with newline.
 // Map Encoding lists
 // # : Wall
 // P : Start position of the player
