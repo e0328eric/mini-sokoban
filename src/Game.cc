@@ -114,6 +114,7 @@ constexpr int downKey = 0x425b1b;
 
 constexpr const char* nextLevelMsg = "Press any key to goto the next level...";
 constexpr const char* quitMsg = "Press any key to quit...";
+constexpr const char* msgFmt = "\x1b[1m\x1b[4m%s\x1b[0m";
 
 Game::Game(const char* bluePrints[], int maxLevel)
     : mTerm()
@@ -125,7 +126,7 @@ Game::Game(const char* bluePrints[], int maxLevel)
     , mMaxLevel(maxLevel)
     , mTotalGoalCount(mBoard.getTotalGoalCount())
     , mGoalCount(mBoard.getGoalCount())
-    , mIsStandOnGoal(false)
+    , mIsStandOnGoal(mBoard.getIsPlayerOnGoal())
 {
 }
 
@@ -148,10 +149,12 @@ void Game::run()
             return;
 
         case GameState::StartGame:
+            mTerm.refreshScreen();
             mState = GameState::Running;
             [[fallthrough]];
 
         case GameState::Running:
+            mTerm.drawf(5, 10, "%d", (int)mIsStandOnGoal);
             renderBoard();
             if (mGoalCount >= mTotalGoalCount)
             {
@@ -170,18 +173,14 @@ void Game::run()
             if (mLevel >= mMaxLevel)
             {
                 mState = GameState::GameOver;
-                mTerm.drawf((termSizeInfo.fst - strlen(quitMsg)) >> 1, msgRowLocation + 1, "\x1b[1m\x1b[4m%s\x1b[0m", quitMsg);
+                mTerm.drawf((termSizeInfo.fst - strlen(quitMsg)) >> 1, msgRowLocation + 1, msgFmt, quitMsg);
                 mTerm.flush();
             }
             else
             {
-                mState = GameState::StartGame;
-                mTerm.drawf((termSizeInfo.fst - strlen(nextLevelMsg)) >> 1, msgRowLocation + 1, "\x1b[1m\x1b[4m%s\x1b[0m", nextLevelMsg);
+                mTerm.drawf((termSizeInfo.fst - strlen(nextLevelMsg)) >> 1, msgRowLocation + 1, msgFmt, nextLevelMsg);
                 mTerm.flush();
-                mBoard.changeMap(mMaps[mLevel]);
-                mTotalGoalCount = mBoard.getTotalGoalCount();
-                mGoalCount = mBoard.getGoalCount();
-                mIsStandOnGoal = false;
+                resetGame();
             }
             break;
         }
@@ -196,6 +195,11 @@ void Game::run()
             }
 
         if (mTerm.isExit(c)) break;
+        if (c == 'r')
+        {
+            resetGame();
+            continue;
+        }
 
         movePlayer(c);
     }
@@ -213,7 +217,17 @@ Element& Game::operator[](Pair<size_t, size_t> pos)
 
 void Game::renderBoard() const
 {
-    mRender.renderBoard();
+    mRender.renderBoard(mLevel);
+}
+
+void Game::resetGame()
+{
+    mState = GameState::StartGame;
+    mBoard.changeMap(mMaps[mLevel]);
+    mTotalGoalCount = mBoard.getTotalGoalCount();
+    mGoalCount = mBoard.getGoalCount();
+    // TODO(#2): mIsStandOnGoal is not changed while the map is loaded for the next level
+    mIsStandOnGoal = mBoard.getIsPlayerOnGoal();
 }
 
 void Game::movePlayer(int key)
