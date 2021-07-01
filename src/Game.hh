@@ -30,6 +30,9 @@ namespace sokoban
 
         void movePlayer(int key);
 
+     private:
+        void resetGame();
+
      public:
         Terminal mTerm;
 

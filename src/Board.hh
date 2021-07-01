@@ -30,6 +30,7 @@ namespace sokoban
         Coordinate& getPlayerPos();
         size_t getTotalGoalCount() const;
         size_t getGoalCount() const;
+        bool getIsPlayerOnGoal() const;
 
         void changeMap(const char* bluePrint);
 
@@ -42,6 +43,7 @@ namespace sokoban
         Coordinate mPlayerPos;
         size_t mTotalGoalCount;
         size_t mGoalCount;
+        bool mIsPlayerOnGoal;
     };
 }// namespace sokoban
 

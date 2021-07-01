@@ -27,7 +27,7 @@ void Render::setBoard(Board* board)
     mBoard = board;
 }
 
-void Render::renderBoard() const
+void Render::renderBoard(int level) const
 {
     auto termSizeInfo = mTerm->getScreenSize();
     auto mapSizeInfo = mBoard->getMapSize();
@@ -35,6 +35,8 @@ void Render::renderBoard() const
     size_t paddingRow = (termSizeInfo.snd - mapSizeInfo.snd) >> 1;
     size_t i, j;
     size_t totalLength = mapSizeInfo.fst * mapSizeInfo.snd;
+
+    mTerm->drawf(20, 10, "\x1b[1mLevel: %d\x1b[0m", level + 1);
 
     for (size_t k = 0; k < totalLength; ++k)
     {

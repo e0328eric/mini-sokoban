@@ -12,7 +12,7 @@ namespace sokoban
         explicit Render(Terminal* term, Board* mBoard);
 
         void setBoard(Board* board);
-        void renderBoard() const;
+        void renderBoard(int level) const;
 
      private:
         Terminal* mTerm;

@@ -13,6 +13,7 @@ Board::Board(const char* bluePrint)
     , mPlayerPos(Pair{0ul, 0ul})
     , mTotalGoalCount(0)
     , mGoalCount(0)
+    , mIsPlayerOnGoal(false)
 {
     const char* firstNewline = strchr(bluePrint, '\n');
     mColSize = firstNewline - bluePrint;
@@ -29,27 +30,33 @@ Board::Board(const char* bluePrint)
     {
         switch (bluePrint[i])
         {
-        case '.':
+        case ' ':
             mBoard[j++] = Element::Air;
             break;
         case '#':
             mBoard[j++] = Element::Wall;
             break;
-        case 'O':
+        case '$':
             mBoard[j++] = Element::Rock;
             break;
-        case 'G':
+        case '.':
             mBoard[j++] = Element::Goal;
             ++mTotalGoalCount;
             break;
-        case 'F':
+        case '*':
             mBoard[j++] = Element::FilledGoal;
             ++mTotalGoalCount;
             ++mGoalCount;
             break;
-        case 'P':
+        case '@':
             mBoard[j] = Element::Player;
             mPlayerPos = Pair{j % mColSize, j / mColSize};
+            ++j;
+            break;
+        case '+':
+            mBoard[j] = Element::Player;
+            mPlayerPos = Pair{j % mColSize, j / mColSize};
+            mIsPlayerOnGoal = true;
             ++j;
             break;
         default:
@@ -100,6 +107,11 @@ size_t Board::getTotalGoalCount() const
 size_t Board::getGoalCount() const
 {
     return mGoalCount;
+}
+
+bool Board::getIsPlayerOnGoal() const
+{
+    return mIsPlayerOnGoal;
 }
 
 void Board::changeMap(const char* bluePrint)
