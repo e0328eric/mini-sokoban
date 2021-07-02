@@ -57,6 +57,7 @@ Board::Board(const char* bluePrint)
             mBoard[j] = Element::Player;
             mPlayerPos = Pair{j % mColSize, j / mColSize};
             mIsPlayerOnGoal = true;
+            ++mTotalGoalCount;
             ++j;
             break;
         default:

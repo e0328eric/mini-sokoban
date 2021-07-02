@@ -7,10 +7,10 @@ using namespace sokoban;
 
 constexpr const char* airBlock = "  ";
 constexpr const char* wallBlock = "\x1b[47m  \x1b[0m";
-constexpr const char* rockBlock = "\x1b[104m  \x1b[0m";
+constexpr const char* rockBlock = "\x1b[48:5:33m  \x1b[0m";
 constexpr const char* goalBlock = "\x1b[103m  \x1b[0m";
 constexpr const char* filledGoalBlock = "\x1b[105m  \x1b[0m";
-constexpr const char* playerBlock = "\x1b[46m  \x1b[0m";
+constexpr const char* playerBlock = "\x1b[48:5:34m  \x1b[0m";
 
 typedef Pair<size_t, size_t> Coordinate;
 
