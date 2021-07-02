@@ -116,7 +116,18 @@ bool Board::getIsPlayerOnGoal() const
 
 void Board::changeMap(const char* bluePrint)
 {
-    *this = Board(bluePrint);
+    delete[] mBoard;
+    Board tmp(bluePrint);
+
+    mBoard = tmp.mBoard;
+    mColSize = tmp.mColSize;
+    mRowSize = tmp.mRowSize;
+    mPlayerPos = tmp.mPlayerPos;
+    mTotalGoalCount = tmp.mTotalGoalCount;
+    mGoalCount = tmp.mGoalCount;
+    mIsPlayerOnGoal = tmp.mIsPlayerOnGoal;
+
+    tmp.mBoard = nullptr;
 }
 
 Element& Board::operator[](Coordinate pos)

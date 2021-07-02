@@ -36,7 +36,7 @@ void Render::renderBoard(int level) const
     size_t i, j;
     size_t totalLength = mapSizeInfo.fst * mapSizeInfo.snd;
 
-    mTerm->drawf(20, 10, "\x1b[1mLevel: %d\x1b[0m", level + 1);
+    mTerm->drawf(termSizeInfo.fst >> 2, termSizeInfo.snd >> 2, "\x1b[1mLevel: %d\x1b[0m", level + 1);
 
     for (size_t k = 0; k < totalLength; ++k)
     {
@@ -63,7 +63,7 @@ void Render::renderBoard(int level) const
             mTerm->draw(paddingCol + i * 2, paddingRow + j, playerBlock);
             break;
         default:
-            assert(0 && "unreachable");
+            assert(0 && "unreachable: renderboard");
         }
     }
 
