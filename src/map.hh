@@ -48,4 +48,4 @@ constexpr const char* map3 =
     "####          ##    #\n"
     "               ######\n";
 
-const char* maps[2] = {map1, map2};
+const char* maps[3] = {map1, map2, map3};
