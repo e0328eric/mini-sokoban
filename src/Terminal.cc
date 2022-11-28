@@ -36,7 +36,7 @@ int getCursorPosition(size_t* rows, size_t* cols)
     }
     buf[i] = '\0';
     if (buf[0] != '\x1b' || buf[1] != '[') return -1;
-    if (sscanf(&buf[2], "%zd;%zd", rows, cols) != 2) return -1;
+    if (sscanf(&buf[2], "%zu;%zu", rows, cols) != 2) return -1;
     return 0;
 }
 
