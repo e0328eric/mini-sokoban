@@ -1,0 +1,13 @@
+.{
+    .name = "mini-sokoban",
+    .version = "0.1.0",
+    .dependencies = .{ .raylib = .{
+        .url = "https://github.com/raysan5/raylib/archive/8d5374a443509036063a350d1649408e009425e7.tar.gz",
+        .hash = "1220d24e5e3610e1fce46ca8c792159b8e4790bd891ccd108e2d09fd2251b555c14f",
+    } },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+    },
+}

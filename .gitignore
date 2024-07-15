@@ -1,3 +1,2 @@
-/obj
-sokoban
-/.ccls-cache
+/.zig-cache
+/zig-out
